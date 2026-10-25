@@ -1,0 +1,15 @@
+{
+  "name": "MW4 Camo Tracker",
+  "short_name": "MW4 Camos",
+  "description": "Suivi mobile des camouflages Modern Warfare 4",
+  "lang": "fr-FR",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0e10",
+  "theme_color": "#101316",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -1,0 +1,17 @@
+MW4 CAMO TRACKER — PACK WEB INSTALLABLE
+
+Contenu :
+- index.html : tracker mobile
+- manifest.webmanifest : métadonnées d’installation
+- sw.js : cache hors ligne
+- icon.svg : icône
+
+IMPORTANT : ce pack n’est pas un fichier APK Android natif. Pour proposer l’installation PWA avec « Ajouter à l’écran d’accueil », les fichiers doivent être publiés sur un hébergement HTTPS (par exemple GitHub Pages). Une fois publié, ouvrir l’adresse dans Chrome Android puis Menu > Ajouter à l’écran d’accueil / Installer l’application.
+
+Les coches sont sauvegardées dans le stockage local du navigateur/appareil. Utilisez « Exporter ma sauvegarde » régulièrement. Ne supprimez pas les données du navigateur sans avoir exporté votre progression.
+
+État des données : le tracker existant est repris tel quel. Les intitulés de certaines armes/camouflages peuvent être incomplets ou non confirmés ; vérifiez-les en jeu. Aucun visuel officiel de camouflage n’est intégré dans cette version.
+
+Sources officielles de référence :
+https://www.callofduty.com/ca/fr/blog/2026/10/call-of-duty-modern-warfare-4-ready-for-launch-progression-prestige
+https://www.callofduty.com/fr/blog/2026/10/call-of-duty-modern-warfare-4-launch-multiplayer-operators-weapons-equipment-create-a-class

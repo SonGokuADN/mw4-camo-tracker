@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101316">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<title>MW4 // Camo Tracker</title>
+<style>
+:root{--bg:#0b0e10;--panel:#151a1e;--panel2:#1c2328;--line:#343e44;--text:#edf1f2;--muted:#9aa7ad;--orange:#ff6a1a;--green:#b8f36b}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#151a1e 0,#090b0d 50%,#111619 100%);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:30px}
+header{padding:22px 16px 18px;border-bottom:2px solid var(--orange);background:linear-gradient(120deg,#1b2226,#0d1012);position:relative;overflow:hidden}
+header:after{content:"MW4";position:absolute;right:-4px;top:-28px;font-weight:1000;font-size:100px;color:#ffffff08;letter-spacing:-8px}
+.kicker{font-size:11px;letter-spacing:3px;color:var(--orange);font-weight:900}.title{font-size:27px;font-weight:950;letter-spacing:-1px;margin:3px 0}.subtitle{color:var(--muted);font-size:12px;max-width:330px}
+main{max-width:760px;margin:auto;padding:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 14px}.stat{background:var(--panel);border:1px solid var(--line);padding:11px;border-radius:8px}.stat strong{display:block;font-size:22px;color:var(--orange)}.stat span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.progress{height:7px;background:#30373b;border-radius:9px;overflow:hidden;margin-top:8px}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--orange),#ffb24d);transition:width .2s}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.controls input,.controls select,button{width:100%;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:7px;padding:11px;font:inherit;min-height:42px}.controls input{grid-column:1/-1}.tabs{display:flex;gap:6px;overflow:auto;padding:2px 0 10px}.tabs button{white-space:nowrap;width:auto;flex:0 0 auto;font-size:12px;padding:9px 12px}.tabs button.active{background:var(--orange);color:#151515;border-color:var(--orange);font-weight:900}
+.section-title{font-size:12px;color:var(--orange);font-weight:900;letter-spacing:1.8px;text-transform:uppercase;margin:18px 2px 8px}
+.weapon{background:var(--panel);border:1px solid var(--line);border-radius:9px;margin:9px 0;overflow:hidden}.weapon summary{list-style:none;cursor:pointer;padding:13px;display:flex;align-items:center;gap:10px}.weapon summary::-webkit-details-marker{display:none}.weapon summary:after{content:"＋";margin-left:auto;color:var(--orange);font-weight:900}.weapon[open] summary:after{content:"−"}.weapon-name{font-weight:850;font-size:15px}.weapon-class{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}.count{margin-left:auto;background:#2a3237;padding:4px 7px;border-radius:5px;font-size:11px;color:var(--green);white-space:nowrap}
+.weapon-body{padding:0 12px 14px}.group{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}.group h3{font-size:12px;margin:0 0 8px;text-transform:uppercase;letter-spacing:1px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.cam{display:flex;gap:8px;align-items:flex-start;padding:9px;background:#20272b;border:1px solid #313a40;border-radius:6px;min-height:47px;font-size:12px}.cam input{accent-color:var(--orange);width:18px;height:18px;flex:0 0 18px;margin:1px 0 0}.cam.checked{border-color:#55743c;background:#20291e}.hint{font-size:11px;color:var(--muted);margin:8px 2px}.modecards{display:grid;grid-template-columns:1fr;gap:8px}.mastery{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px}.mastery h3{margin:0 0 9px;color:var(--orange);font-size:13px}.mastery .cam{margin:6px 0}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}.actions button{font-size:12px}.actions .primary{background:var(--orange);border-color:var(--orange);color:#111;font-weight:900}.note{font-size:11px;color:var(--muted);padding:12px;border:1px dashed var(--line);border-radius:7px;margin-top:16px}a{color:var(--orange)}.empty{padding:20px;text-align:center;color:var(--muted)}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.modecards{grid-template-columns:1fr 1fr}.controls{grid-template-columns:2fr 1fr 1fr}.controls input{grid-column:auto}}
+</style></head>
+<body>
+<header><div class="kicker">CALL OF DUTY // ARMORY</div><div class="title">MW4 CAMO TRACKER</div><div class="subtitle">Suivi personnel des camouflages · version mobile · progression sauvegardée sur cet appareil</div></header>
+<main>
+<div class="stats"><div class="stat"><strong id="done">0</strong><span>Débloqués</span></div><div class="stat"><strong id="total">0</strong><span>À suivre</span></div><div class="stat"><strong id="percent">0%</strong><span>Progression</span><div class="progress"><div class="bar" id="bar"></div></div></div></div>
+<div class="tabs" id="topTabs"><button class="active" data-view="armes">ARMES</button><button data-view="maitrise">MAÎTRISE DE MODE</button></div>
+<div id="armsView">
+<div class="controls"><input id="search" placeholder="⌕ Rechercher une arme…" aria-label="Rechercher une arme"><select id="classFilter"><option value="">Toutes les catégories</option></select><select id="camoFilter"><option value="">Tous les camouflages</option><option>Militaire</option><option>Spécial</option><option>Érudit</option><option>Prestige</option></select></div>
+<div class="hint">Coche chaque camouflage individuellement. Les coches sont enregistrées automatiquement dans ce navigateur.</div>
+<div id="weaponList"></div>
+</div>
+<div id="masteryView" hidden><div class="section-title">Maîtrise par mode</div><p class="hint">Ces camouflages sont suivis séparément du parcours propre à chaque arme.</p><div id="masteryList" class="modecards"></div></div>
+<div class="actions"><button class="primary" id="exportBtn">Exporter ma sauvegarde</button><button id="importBtn">Importer une sauvegarde</button><button id="resetBtn">Réinitialiser les coches</button><button id="sourcesBtn">Sources & informations</button></div>
+<input type="file" id="importFile" accept="application/json" hidden>
+<div id="sourceInfo" class="note" hidden>Sources consultées : <a href="https://www.callofduty.com/ca/fr/blog/2026/10/call-of-duty-modern-warfare-4-ready-for-launch-progression-prestige" target="_blank" rel="noopener">guide officiel Activision</a> et <a href="https://mw4.gg/camo-tracker/" target="_blank" rel="noopener">MW4.GG tracker</a>. Les noms des 8 Militaires sont numérotés dans le jeu. Les 3 Spéciaux sont propres à chaque arme ; les noms/défis détaillés peuvent évoluer ou ne pas être tous confirmés publiquement : ils sont donc notés Spécial 1–3 plutôt que d'inventer des noms. Warzone n'est pas inclus dans les modes demandés. Liste de 33 armes de lancement compilée depuis les trackers consultés ; vérifie le catalogue en jeu après les mises à jour.</div>
+</main>
+<script>
+const weapons=[
+[".50 GS","Arme de poing"],["APOC 338","Fusil de précision"],["Astaroth .57","Arme de poing"],["Axion","Fusil d’assaut"],["Combat Knife","Corps à corps"],["Cronen Squall","Fusil tactique"],["FINN LMG","Mitrailleuse"],["FSS 1095 Carbon Blade","Corps à corps"],["Han 86","Fusil d’assaut"],["Hyeon Burst","Fusil tactique"],["ISO Nightshade","Mitraillette"],["JOKR","Lanceur"],["Kastov 762","Fusil d’assaut"],["KG-7 Vulcan","Fusil de précision"],["Krait P68","Arme de poing"],["M4","Fusil d’assaut"],["MAR-9","Fusil tactique"],["Mojave .357","Arme de poing"],["Mosin-Nagant","Fusil de précision"],["Oden","Fusil d’assaut"],["Oris 8.6","Fusil de précision"],["Patriot XMR","Fusil de précision"],["PILA","Lanceur"],["PM-40 Anvil","Mitraillette"],["PPSh-41","Mitraillette"],["Rezi 12","Fusil à pompe"],["Sang 9mm","Arme de poing"],["SIGNAL 50","Fusil de précision"],["Type 73","Fusil tactique"],["VEL 46","Mitraillette"],["Warlord","Mitraillette"],["Wz.55 Striga","Fusil à pompe"],["X-58 NYX","Lanceur"]
+];
+// Deduplicate accidental repeated catalogue aliases, retaining 33 unique display entries as listed by trackers.
+const uniq=weapons;
+const camoGroups={
+"Militaire":Array.from({length:8},(_,i)=>`Militaire ${i+1}`),
+"Spécial":["Spécial 1 · défi propre à l’arme","Spécial 2 · défi propre à l’arme","Spécial 3 · défi propre à l’arme"],
+"Érudit":["Or","Platine","Rupture harmonique","Divergence"],
+"Prestige":["Pyroclaste","Terminus pyroclastique","Dispersion pyroclastique","Cascade pyroclastique"]
+};
+const mastery={"Multijoueur":["Dérive mercuriale","Polyatomique reforgé","Orion reforgé"],"DMZ":["Chiral","Marée ondulante","Hélio"]};
+let state={checks:{},mastery:{}};
+const key="mw4-camo-tracker-mobile-v1";
+try{state=JSON.parse(localStorage.getItem(key))||state}catch(e){}
+function save(){try{localStorage.setItem(key,JSON.stringify(state))}catch(e){} updateStats()}
+function checked(id){return !!state.checks[id]}
+function camoHTML(id,label,desc=""){return `<label class="cam ${checked(id)?"checked":""}"><input type="checkbox" data-id="${id}" ${checked(id)?"checked":""}><span><b>${label}</b>${desc?`<br><span style="color:#9aa7ad">${desc}</span>`:""}</span></label>`}
+function renderArms(){
+ const search=document.getElementById("search").value.toLowerCase(), cls=document.getElementById("classFilter").value, cf=document.getElementById("camoFilter").value;
+ const list=document.getElementById("weaponList");list.innerHTML="";
+ const categories=[...new Set(uniq.map(w=>w[1]))].sort(); document.getElementById("classFilter").innerHTML='<option value="">Toutes les catégories</option>'+categories.map(c=>`<option ${c===cls?"selected":""}>${c}</option>`).join("");
+ let n=0;
+ uniq.forEach(([name,category],idx)=>{
+  if(!name.toLowerCase().includes(search)|| (cls&&cls!==category))return;
+  const all=Object.entries(camoGroups).filter(([g])=>!cf||cf===g);
+  const ids=all.flatMap(([g,arr])=>arr.map((_,i)=>`${idx}|${g}|${i}`));
+  const done=ids.filter(checked).length;
+  let body=all.map(([g,arr])=>`<div class="group"><h3>${g} <span style="color:#9aa7ad;font-weight:400">· ${arr.filter((_,i)=>checked(`${idx}|${g}|${i}`)).length}/${arr.length}</span></h3><div class="grid">${arr.map((label,i)=>camoHTML(`${idx}|${g}|${i}`,label,g==="Militaire"?"Déblocage par niveau d’arme":g==="Prestige"?"Progression Prestige d’arme":"").replace('data-id=',`data-weapon="${idx}" data-group="${g}" data-id=`)).join("")}</div></div>`).join("");
+  const details=document.createElement("details");details.className="weapon";details.innerHTML=`<summary><div><div class="weapon-name">${name}</div><div class="weapon-class">${category}</div></div><span class="count">${done}/${ids.length}</span></summary><div class="weapon-body">${body}</div>`;
+  if(cf)details.open=true;list.appendChild(details);n++;
+ });
+ if(!n)list.innerHTML='<div class="empty">Aucune arme ne correspond à ta recherche.</div>';
+}
+function renderMastery(){document.getElementById("masteryList").innerHTML=Object.entries(mastery).map(([mode,names])=>{const done=names.filter((_,i)=>!!state.mastery[mode+"|"+i]).length;const pct=names.length?Math.round(done/names.length*100):0;return `<section class="mastery"><h3>◈ ${mode.toUpperCase()}</h3><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin:0 0 5px"><span style="color:#9aa7ad">Progression du mode</span><b style="color:var(--green)">${pct}% · ${done}/${names.length}</b></div><div class="progress" style="margin:0 0 10px"><div class="bar" style="width:${pct}%"></div></div>${names.map((name,i)=>`<label class="cam ${state.mastery[mode+"|"+i]?"checked":""}"><input type="checkbox" data-mastery="${mode}|${i}" ${state.mastery[mode+"|"+i]?"checked":""}><span><b>${name}</b><br><span style="color:#9aa7ad;font-size:11px">Camouflage de maîtrise</span></span></label>`).join("")}</section>`}).join("")}
+function updateStats(){let d=0,t=0;Object.entries(camoGroups).forEach(([g,a])=>a.forEach((_,i)=>uniq.forEach((w,wi)=>{t++;if(checked(`${wi}|${g}|${i}`))d++})));Object.values(mastery).forEach((arr)=>arr.forEach((_,i)=>{t++;if(Object.values(state.mastery).length&&Object.keys(state.mastery).some(k=>k.endsWith("|"+i)&&state.mastery[k])){} }));d=Object.values(state.checks).filter(Boolean).length+Object.values(state.mastery).filter(Boolean).length;t=uniq.length*Object.values(camoGroups).reduce((s,a)=>s+a.length,0)+Object.values(mastery).reduce((s,a)=>s+a.length,0);document.getElementById("done").textContent=d;document.getElementById("total").textContent=t;const p=t?Math.round(d/t*100):0;document.getElementById("percent").textContent=p+"%";document.getElementById("bar").style.width=p+"%"}
+document.addEventListener("change",e=>{if(e.target.matches("[data-id]")){state.checks[e.target.dataset.id]=e.target.checked;save();const opened=[...document.querySelectorAll(".weapon")].map(x=>x.open);renderArms();document.querySelectorAll(".weapon").forEach((x,i)=>x.open=opened[i]||false)}if(e.target.matches("[data-mastery]")){state.mastery[e.target.dataset.mastery]=e.target.checked;save();renderMastery()}});
+document.getElementById("search").addEventListener("input",renderArms);document.getElementById("classFilter").addEventListener("change",renderArms);document.getElementById("camoFilter").addEventListener("change",renderArms);
+document.querySelectorAll("#topTabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#topTabs button").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("armsView").hidden=b.dataset.view!=="armes";document.getElementById("masteryView").hidden=b.dataset.view!=="maitrise"});
+document.getElementById("exportBtn").onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="MW4-ma-sauvegarde-camos.json";a.click();URL.revokeObjectURL(a.href)};
+document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();document.getElementById("importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const x=JSON.parse(await f.text());if(x.checks&&x.mastery){state=x;save();renderArms();renderMastery();alert("Sauvegarde importée.")}else alert("Fichier de sauvegarde non reconnu.")}catch(err){alert("Impossible de lire ce fichier.")}e.target.value=""};
+document.getElementById("resetBtn").onclick=()=>{if(confirm("Effacer toutes les coches de ce tracker sur cet appareil ?")){state={checks:{},mastery:{}};save();renderArms();renderMastery()}};
+document.getElementById("sourcesBtn").onclick=()=>{const x=document.getElementById("sourceInfo");x.hidden=!x.hidden};
+renderArms();renderMastery();updateStats();
+if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) { window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {})); }
+</script></body></html>
